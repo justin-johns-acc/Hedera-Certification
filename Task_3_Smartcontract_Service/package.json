@@ -1,0 +1,19 @@
+{
+  "name": "contract_service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "@hashgraph/hethers": "^1.2.5",
+    "@hashgraph/sdk": "^2.16.6",
+    "dotenv": "^16.0.1",
+    "i": "^0.3.7",
+    "npm": "^9.4.0"
+  },
+  "scripts": {
+    "start:executesmartcontractfunctions": "node scripts/executeSmartcontractFunctions.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

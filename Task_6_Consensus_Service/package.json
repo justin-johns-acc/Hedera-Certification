@@ -1,0 +1,17 @@
+{
+  "name": "consensus_transaction",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "@hashgraph/sdk": "^2.16.6",
+    "dotenv": "^16.0.1"
+  },
+  "scripts": {
+    "start:submitmsg": "node scripts/consensusTransaction.js",
+    "start:subscibetopic": "node scripts/subscibeTopic.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
