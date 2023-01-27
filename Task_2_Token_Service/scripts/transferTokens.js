@@ -12,7 +12,6 @@ const {
   TokenPauseTransaction,
   TokenUnpauseTransaction,
 } = require("@hashgraph/sdk");
-const { writeFile } = require("fs/promises");
 require('dotenv').config();
 const {
 	ACCOUNT_1_PRIVKEY,
