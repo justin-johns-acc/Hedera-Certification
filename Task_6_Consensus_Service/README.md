@@ -16,7 +16,6 @@ run command  `npm start`
 ## output
 ```
 Topic 0.0.3424957 created
-- topicId 0.0.3424957
 The message transaction status: 22
 Fri Feb 10 2023 15:18:36 GMT+0530 (India Standard Time) Received: Fri, 10 Feb 2023 09:48:35 GMT
 ```

@@ -14,6 +14,8 @@ async function main() {
 
   let currentTime = new Date().getTime();
   let memo = "This messege submitted at " + currentTime;
+
+  // create scheduled trasnfer transaction encoded
   const scheduletransactionEncoded = await createScheduleTransferTransaction(
     client,
     accountOne,
@@ -21,16 +23,18 @@ async function main() {
     2,
     memo
   );
+
+  // decoded trsnfer transaction and submit
   const scheduleId = await submitScheduledTxn(
     client,
     scheduletransactionEncoded
   );
+
+  // get scheduled info
   await getScheduleInfo(client, scheduleId);
 
+  
   const fileName = 'schedule.json';
-
-
-
   const scheduleIdObj = {scheduleId: scheduleId.toString()}
   
   // write schedule id into json file

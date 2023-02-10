@@ -39,7 +39,6 @@ export const createTopic = async (client) => {
   };
   
 export const subscribeTopic = async (client, topicId) => {
-	console.log('- topicId', topicId);
   
 	//Create the query to subscribe to a topic
 	new TopicMessageQuery().setTopicId(topicId).subscribe(client, null, (message) => {

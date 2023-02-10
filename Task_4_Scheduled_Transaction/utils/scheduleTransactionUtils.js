@@ -62,7 +62,7 @@ export const getScheduleInfo = async (client, scheduleId) => {
   //Sign with the client operator private key and submit the query request to a node in a Hedera network
   const info = await query.execute(client);
   console.log(
-    "The scheduledId you queried for is: ",
+    "\nThe scheduledId you queried for is: ",
     new ScheduleId(info.scheduleId).toString()
   );
   console.log("The memo for it is: ", info.scheduleMemo);

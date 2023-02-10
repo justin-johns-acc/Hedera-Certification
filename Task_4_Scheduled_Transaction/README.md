@@ -39,10 +39,25 @@ File created: schedule.jso
 
 
 ```
+working with schedule id: 0.0.3426366
+
+The scheduledId you queried for is:  0.0.3426366
+The memo for it is:  This messege submitted at 1676030763237
+It got created by:  0.0.3425202
+It got payed by:  0.0.3425202
+The expiration time of the scheduled tx is:  2023-02-10T12:36:03.000Z
+The transaction has not been executed yet.
 The transaction consensus status is 22
 Scheduled deleted
 
 The transaction errored with message SCHEDULE_ALREADY_DELETED
 
-Error:{"name":"StatusError","status":"SCHEDULE_ALREADY_DELETED","transactionId":"0.0.3425202@1676027869.959107016","message":"receipt for transaction 0.0.3425202@1676027869.959107016 contained error status SCHEDULE_ALREADY_DELETED"}
+Error:{"name":"StatusError","status":"SCHEDULE_ALREADY_DELETED","transactionId":"0.0.3425202@1676030760.661458486","message":"receipt for transaction 0.0.3425202@1676030760.661458486 contained error status SCHEDULE_ALREADY_DELETED"}
+
+The scheduledId you queried for is:  0.0.3426366
+The memo for it is:  This messege submitted at 1676030763237
+It got created by:  0.0.3425202
+It got payed by:  0.0.3425202
+The expiration time of the scheduled tx is:  2023-02-10T12:36:03.000Z
+The transaction has not been executed yet.
 ```
