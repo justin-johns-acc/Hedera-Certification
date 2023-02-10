@@ -125,48 +125,6 @@ export const getTokenBalance = async (client, account) => {
   return (await new AccountBalanceQuery().setAccountId(account.accountID).execute(client)).tokens.toString();
 }
 
-export const swapTokens = async (client, tokenOneId, tokenTwoId, accountOne, accountTwo, amount) => {
-
-  const accountOneKey = PrivateKey.fromString(accountOne.privateKey)
-  const accountTwoKey = PrivateKey.fromString(accountTwo.privateKey)
-
-
-  // associate token one with account two
-  let associateTokenOneWithAccountTwoTx = await new TokenAssociateTransaction()
-  .setAccountId(accountTwo.accountID)
-  .setTokenIds([tokenOneId])
-  .freezeWith(client)
-  .sign(accountTwoKey);
-
-  let associateAccountTxSubmitOne = await associateTokenOneWithAccountTwoTx.execute(client);
-  let receieptOne = await associateAccountTxSubmitOne.getReceipt(client);
-  console.log(`- Token association with account 1st token: ${receieptOne.status} \n`)
-
-  // associate token two with account one
-  let associateTokenTwoWithAccountOneTx = await new TokenAssociateTransaction()
-  .setAccountId(accountOne.accountID)
-  .setTokenIds([tokenTwoId])
-  .freezeWith(client)
-  .sign(accountOneKey);
-
-  let associateAccountTxSubmitTwo = await associateTokenTwoWithAccountOneTx.execute(client);
-  let receieptTwo = await associateAccountTxSubmitTwo.getReceipt(client);
-  console.log(`- Token association with 2nd token : ${receieptTwo.status} \n`)
-
-  // swap tokens
-    let atomicSwap = new TransferTransaction()
-    .addTokenTransfer(tokenOneId, accountOne.accountID, -amount)
-    .addTokenTransfer(tokenOneId, accountTwo.accountID, amount)
-    .addTokenTransfer(tokenTwoId, accountTwo.accountID, -amount)
-    .addTokenTransfer(tokenTwoId, accountOne.accountID, amount)
-		.freezeWith(client);
-
-	let tokenTransferTx = await (await (await atomicSwap.sign(accountOneKey)).sign(accountTwoKey)).execute(client)
-	
-    let tokenTransferRx = await tokenTransferTx.getReceipt(client);
-
-    console.log(`\n- NFT transfer secondary: ${tokenTransferRx.status} \n`);
-}
 
 export const grantKyc = async (client, tokenId, accountApprover, AccountReceiver) => {
 

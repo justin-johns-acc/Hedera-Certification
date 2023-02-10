@@ -5,27 +5,23 @@ import {
 	TopicMessageQuery,
   } from '@hashgraph/sdk';
 
-  //Get accounts from accounts.json
-import accounts from "../../Task_1_Account_Setup/accounts.json" assert { type: "json" };
-const [accountOne, ...rest] = accounts;
 
-export const getClient = async () => {
-  // If we weren't able to grab it, we should throw a new error
-  if (accountOne.accountID == null || accountOne.privateKey == null) {
-    throw new Error(
-      "Environment variables accountID and privateKey must be present"
-    );
-  }
+export const getClient = async (account) => {
+	// If we weren't able to grab it, we should throw a new error
+	if (account.accountID == null || account.privateKey == null) {
+	  throw new Error(
+		"Environment variables accountID and privateKey must be present"
+	  );
+	}
+  
+	// Create our connection to the Hedera network
+	return Client.forTestnet().setOperator(
+	  account.accountID,
+	  account.privateKey
+	);
+  };
 
-  // Create our connection to the Hedera network
-  return Client.forTestnet().setOperator(
-    accountOne.accountID,
-    accountOne.privateKey
-  );
-};
-
-export const createTopic = async () => {
-	const client = await getClient();
+export const createTopic = async (client) => {
   
 	//Create a new topic
 	let txResponse = await new TopicCreateTransaction().execute(client);
@@ -42,9 +38,8 @@ export const createTopic = async () => {
 	return receipt.topicId;
   };
   
-export const subscribeTopic = async (topicId) => {
+export const subscribeTopic = async (client, topicId) => {
 	console.log('- topicId', topicId);
-	const client = await getClient();
   
 	//Create the query to subscribe to a topic
 	new TopicMessageQuery().setTopicId(topicId).subscribe(client, null, (message) => {
@@ -53,8 +48,7 @@ export const subscribeTopic = async (topicId) => {
 	});
   };
   
-export const submitMsg = async (topicID, msg) => {
-	const client = await getClient();
+export const submitMsg = async (client, topicID, msg) => {
   
 	// Send one message
 	let sendResponse = await new TopicMessageSubmitTransaction({

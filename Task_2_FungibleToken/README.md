@@ -1,4 +1,4 @@
-# Task 5
+# Task 2
 
 ## Problem
 Create a script that generates a fungible token that requires a KYC
