@@ -14,14 +14,14 @@ async function main() {
 
 	await assocTokens(client, tokenId, accountThree);
 
-	// transfer token one to account two
+	// transfer token to account two
 	await transferToken(client, accountOne, accountThree, tokenId, 1299);
 
 	// grant kyc to account three
 	await grantKyc(client, tokenId, accountTwo, accountThree)
 
 
-	// transfer token one to account two
+	// transfer token to account two
 	await transferToken(client, accountOne, accountThree, tokenId, 1299);
 
 	const accountThreeBalance = (await getTokenBalance(client, accountThree)).toString()
