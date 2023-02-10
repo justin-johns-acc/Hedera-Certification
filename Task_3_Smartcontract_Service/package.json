@@ -1,19 +1,24 @@
 {
-  "name": "contract_service",
+  "name": "smart_contract_service",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node scripts/executeSmartcontractFunctions.js",
+    "test": "echo \\\"Error: no test specified\\\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "dotenv": "^10.0.0",
+    "hardhat": "^2.9.1",
+    "hardhat-contract-sizer": "^2.5.1",
+    "hardhat-gas-reporter": "^1.0.8"
+  },
   "dependencies": {
     "@hashgraph/hethers": "^1.2.5",
     "@hashgraph/sdk": "^2.16.6",
-    "dotenv": "^16.0.1",
-    "i": "^0.3.7",
-    "npm": "^9.4.0"
-  },
-  "scripts": {
-    "start:executesmartcontractfunctions": "node scripts/executeSmartcontractFunctions.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC"
+    "web3": "^1.8.1"
+  }
 }

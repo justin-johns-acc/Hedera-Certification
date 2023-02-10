@@ -1,0 +1,4 @@
+Topic 0.0.11251 created
+- topicId 0.0.11251
+The message transaction status: 22
+Fri Jan 27 2023 17:11:08 GMT+0530 (India Standard Time) Received: Fri, 27 Jan 2023 11:41:08 GMT
