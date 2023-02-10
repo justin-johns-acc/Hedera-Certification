@@ -18,3 +18,9 @@ Delete the smart contract.
 run command  `npm start`
 
 ## output
+```
+The new contract ID is 0.0.3425300
+Function 1 Output : 30
+The transaction consensus status is 22
+contract deleted succesfully 
+```

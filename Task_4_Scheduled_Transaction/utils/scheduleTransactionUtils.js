@@ -29,13 +29,14 @@ export const createScheduleTransferTransaction = async (
   client,
   accountOne,
   accountTwo,
+  amount,
   memo
 ) => {
   const privateKey = PrivateKey.fromString(accountOne.privateKey);
   //Create a transaction to schedule
   const transaction = new TransferTransaction()
-    .addHbarTransfer(accountOne.accountID, Hbar.fromTinybars(-10))
-    .addHbarTransfer(accountTwo.accountID, Hbar.fromTinybars(10));
+    .addHbarTransfer(accountOne.accountID, new Hbar(amount))
+    .addHbarTransfer(accountTwo.accountID, new Hbar(amount));
 
   //Schedule a transaction
   const scheduletransaction = new ScheduleCreateTransaction()
@@ -90,10 +91,8 @@ export const getScheduleInfo = async (client, scheduleId) => {
 
 export const submitScheduledTxn = async (
   client,
-  privateKeyRaw,
   scheduletransactionEncoded
 ) => {
-  const privateKey = PrivateKey.fromString(privateKeyRaw);
   const transactionRebuiltRaw1 = Buffer.from(
     scheduletransactionEncoded,
     "base64"
@@ -101,9 +100,8 @@ export const submitScheduledTxn = async (
   const transactionRebuilt1 = ScheduleCreateTransaction.fromBytes(
     transactionRebuiltRaw1
   );
-  const signedTransaction3 = await transactionRebuilt1.sign(privateKey);
 
-  const txResponse = await signedTransaction3.execute(client);
+  const txResponse = await transactionRebuilt1.execute(client);
   const receipt = await txResponse.getReceipt(client);
   console.log(
     `TX ${txResponse.transactionId.toString()} status: ${receipt.status}`
@@ -114,3 +112,45 @@ export const submitScheduledTxn = async (
   console.log("The schedule ID is " + scheduleId);
   return scheduleId;
 };
+
+export const deleteScheduledTransaction = async (client, scheduleId, admin) => {
+
+  const adminKey = PrivateKey.fromString(admin.privateKey);
+
+  //Create the transaction and sign with the admin key
+  const transaction = await new ScheduleDeleteTransaction()
+    .setScheduleId(scheduleId)
+    .freezeWith(client)
+    .sign(adminKey);
+
+  //Sign with the operator key and submit to a Hedera network
+  const txResponse = await transaction.execute(client);
+
+  //Get the transaction receipt
+  const receipt = await txResponse.getReceipt(client);
+
+  //Get the transaction status
+  const transactionStatus = receipt.status;
+  console.log("The transaction consensus status is " + transactionStatus);
+}
+
+export const signScheduledTransaction = async (client, scheduleId, account) => {
+
+  const privateKeySigner = PrivateKey.fromString(account.privateKey)
+
+  //Create the transaction
+  const transaction = await new ScheduleSignTransaction()
+    .setScheduleId(scheduleId)
+    .freezeWith(client)
+    .sign(privateKeySigner);
+
+  //Sign with the client operator key to pay for the transaction and submit to a Hedera network
+  const txResponse = await transaction.execute(client);
+
+  //Get the receipt of the transaction
+  const receipt = await txResponse.getReceipt(client);
+
+  //Get the transaction status
+  const transactionStatus = receipt.status;
+  console.log("The transaction consensus status is " + transactionStatus);
+}

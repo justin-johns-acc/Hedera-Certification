@@ -107,6 +107,7 @@ export const deleteContract = async (contractId, adminAccount) => {
   //Create the transaction
   const transaction = await new ContractDeleteTransaction()
     .setContractId(contractId)
+    .setTransferAccountId(adminAccount.accountID)
     .freezeWith(client);
 
     // Sign with the admin key on the contract
@@ -122,4 +123,5 @@ export const deleteContract = async (contractId, adminAccount) => {
   const transactionStatus = receipt.status;
 
   console.log("The transaction consensus status is " + transactionStatus);
+  console.log('contract deleted succesfully ');
 };

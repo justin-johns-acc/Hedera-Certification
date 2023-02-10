@@ -17,11 +17,11 @@ async function main() {
     client,
     accountOne,
     accountTwo,
+    2,
     memo
   );
   const scheduleId = await submitScheduledTxn(
     client,
-    accountOne.privateKey,
     scheduletransactionEncoded
   );
   await getScheduleInfo(client, scheduleId);

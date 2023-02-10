@@ -9,7 +9,7 @@
     "dotenv": "^16.0.1"
   },
   "scripts": {
-    "start": "node scripts/createTokenAndSwap.js",
+    "start": "node scripts/tokenTransfer.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
