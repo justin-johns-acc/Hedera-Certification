@@ -1,12 +1,8 @@
 import {
   Client,
   TokenCreateTransaction,
-  TokenMintTransaction,
   TokenType,
   TokenSupplyType,
-  CustomRoyaltyFee,
-  CustomFixedFee,
-  Hbar,
   PrivateKey,
   AccountBalanceQuery,
   TokenAssociateTransaction,

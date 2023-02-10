@@ -6,6 +6,7 @@ import {
   submitScheduledTxn,
   getScheduleInfo,
 } from "../utils/scheduleTransactionUtils.js";
+import { createFile } from "../utils/fileUtils.js"
 const [accountOne, accountTwo, ...rest] = accounts;
 
 async function main() {
@@ -25,6 +26,15 @@ async function main() {
     scheduletransactionEncoded
   );
   await getScheduleInfo(client, scheduleId);
+
+  const fileName = 'schedule.json';
+
+
+
+  const scheduleIdObj = {scheduleId: scheduleId.toString()}
+  
+  // write schedule id into json file
+  await createFile(fileName, scheduleIdObj);
 
   process.exit();
 }

@@ -7,7 +7,9 @@ import {
   ScheduleId,
   ScheduleInfoQuery,
   Timestamp,
-  Client
+  Client,
+  ScheduleSignTransaction,
+  ScheduleDeleteTransaction
 } from "@hashgraph/sdk";
 
 export const getClient = async (account) => {
@@ -36,7 +38,7 @@ export const createScheduleTransferTransaction = async (
   //Create a transaction to schedule
   const transaction = new TransferTransaction()
     .addHbarTransfer(accountOne.accountID, new Hbar(amount))
-    .addHbarTransfer(accountTwo.accountID, new Hbar(amount));
+    .addHbarTransfer(accountTwo.accountID, new Hbar(-amount));
 
   //Schedule a transaction
   const scheduletransaction = new ScheduleCreateTransaction()
@@ -132,17 +134,19 @@ export const deleteScheduledTransaction = async (client, scheduleId, admin) => {
   //Get the transaction status
   const transactionStatus = receipt.status;
   console.log("The transaction consensus status is " + transactionStatus);
+  console.log('Scheduled deleted');
 }
 
 export const signScheduledTransaction = async (client, scheduleId, account) => {
 
   const privateKeySigner = PrivateKey.fromString(account.privateKey)
 
-  //Create the transaction
+  try {
+    //Create the transaction
   const transaction = await new ScheduleSignTransaction()
-    .setScheduleId(scheduleId)
-    .freezeWith(client)
-    .sign(privateKeySigner);
+  .setScheduleId(scheduleId)
+  .freezeWith(client)
+  .sign(privateKeySigner);
 
   //Sign with the client operator key to pay for the transaction and submit to a Hedera network
   const txResponse = await transaction.execute(client);
@@ -153,4 +157,10 @@ export const signScheduledTransaction = async (client, scheduleId, account) => {
   //Get the transaction status
   const transactionStatus = receipt.status;
   console.log("The transaction consensus status is " + transactionStatus);
+    
+  } catch (err) {
+    console.error('\nThe transaction errored with message ' + err.status.toString());
+    console.error('\nError:' + err.toString());
+  }
+
 }
