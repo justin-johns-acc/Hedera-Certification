@@ -2,6 +2,9 @@ import {
   Client,
   ContractCreateFlow,
   ContractExecuteTransaction,
+  ContractDeleteTransaction,
+  PrivateKey,
+  Wallet
 } from "@hashgraph/sdk";
 
 //Get accounts from accounts.json
@@ -24,17 +27,23 @@ export const getClient = async () => {
 };
 
 // deploy contract to hedera
-export const deployContract = async (bytecode, params) => {
+export const deployContract = async (bytecode, params, adminAccount) => {
   const client = await getClient();
 
+  // const adminPrvKey = PrivateKey.fromString(adminAccount.privateKey);
+  const adminUser = new Wallet(adminAccount.accountID, adminAccount.privateKey);
+  
   //Create the transaction
   const contractCreate = new ContractCreateFlow()
     .setGas(100000)
     .setBytecode(bytecode)
     .setConstructorParameters(params);
 
+  // set adminKey
+  const contractCreateTx = contractCreate.setAdminKey(adminUser.publicKey);
+
   //Sign the transaction with the client operator key and submit to a Hedera network
-  const txResponse = contractCreate.execute(client);
+  const txResponse = contractCreateTx.execute(client);
 
   //Get the receipt of the transaction
   const receipt = (await txResponse).getReceipt(client);
@@ -88,4 +97,29 @@ export const exeContractQuery = async (functionName, params, contractId) => {
   console.log("contract message: " + message);
 
   return message;
+};
+
+export const deleteContract = async (contractId, adminAccount) => {
+
+  const adminPrvKey = PrivateKey.fromString(adminAccount.privateKey)
+
+  const client = await getClient();
+  //Create the transaction
+  const transaction = await new ContractDeleteTransaction()
+    .setContractId(contractId)
+    .freezeWith(client);
+
+    // Sign with the admin key on the contract
+    const signTx = await transaction.sign(adminPrvKey)
+
+  //Sign the transaction with the client operator's private key and submit to a Hedera network
+  const txResponse = await signTx.execute(client);
+
+  //Get the receipt of the transaction
+  const receipt = await txResponse.getReceipt(client);
+
+  //Get the transaction consensus status
+  const transactionStatus = receipt.status;
+
+  console.log("The transaction consensus status is " + transactionStatus);
 };

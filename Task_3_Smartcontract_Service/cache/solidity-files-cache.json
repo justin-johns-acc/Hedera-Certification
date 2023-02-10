@@ -1,0 +1,40 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "/home/justin/Documents/Accubits/Projects/Hedera/Hedera-Certification/Task_3_Smartcontract_Service/contracts/certificationC3.sol": {
+      "lastModificationDate": 1676019706814,
+      "contentHash": "94e1df017cbe7100ee672bdbba79f13f",
+      "sourceName": "contracts/certificationC3.sol",
+      "solcConfig": {
+        "version": "0.8.15",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.15"
+      ],
+      "artifacts": [
+        "CertificationC1"
+      ]
+    }
+  }
+}
